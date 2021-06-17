@@ -6,11 +6,11 @@ conn = sqlite3.connect('login.db')
 
 cur = conn.cursor()
 
-cur.execute("""CREATE TABLE login (
+'''cur.execute("""CREATE TABLE login (
                 website text,
                 username text,
                 password text
-    )""")
+    )""")'''
 
 #Inserting login details
 def add_password():
@@ -22,6 +22,7 @@ def add_password():
         #log = LOGIN('website', 'username', 'password')
 
         cur.execute("INSERT INTO login VALUES(?, ?, ?)", (website, username, password))
+        print("Password added successfully")
 
 #Retrieving login details
 def get_password():
@@ -43,6 +44,7 @@ def update_password():
 
         try:
             cur.execute("UPDATE login SET password = ? WHERE website = ? and username = ?",  (password, website, username))
+            print('Password updated successfully')
         
         except:
             print("Username / Website doesn't exist in records")
@@ -54,6 +56,7 @@ def delete_password():
     
         try:
             cur.execute("DELETE from login WHERE website = ? and username = ?", (website, username))
+            print("Password deleted successfully")
         
         except Exception as e:
             print("Username / Website doesn't exist in records")
