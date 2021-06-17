@@ -23,10 +23,9 @@ def add_password():
 
         website = input('Enter website: ')
         username = input('Enter username: ')
-        password = input('Enter password: ').encode('utf-8')
+        password = input('Enter password: ').encode('utf-8') # Converting password to bytes for encryption
 
-        #log = LOGIN('website', 'username', 'password')
-        encrypted_pw = crypt.encrypt(password) #Converting password to bytes for encryption
+        encrypted_pw = crypt.encrypt(password) # Encryption
 
         cur.execute("INSERT INTO login VALUES(?, ?, ?)", (website, username, encrypted_pw))
         print("Password added successfully")
@@ -49,10 +48,13 @@ def update_password():
     with conn:
         website = input('Enter website: ')
         username = input('Enter username: ')
-        password =  input('Enter updated password: ')
+        password =  input('Enter updated password: ').encode('utf-8')
+
+        encrypted_pw = crypt.encrypt(password) # Encryption
 
         try:
-            cur.execute("UPDATE login SET password = ? WHERE website = ? and username = ?",  (password, website, username))
+            cur.execute("UPDATE login SET password = ? WHERE website = ? and username = ?",  (encrypted_pw, website, username))
+
             print('Password updated successfully')
         
         except:
