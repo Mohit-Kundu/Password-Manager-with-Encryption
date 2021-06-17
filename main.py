@@ -6,6 +6,7 @@ conn = sqlite3.connect('login.db')
 
 cur = conn.cursor()
 
+#Only run first time to create table
 '''cur.execute("""CREATE TABLE login (
                 website text,
                 username text,
