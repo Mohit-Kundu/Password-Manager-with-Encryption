@@ -13,7 +13,7 @@ cur = conn.cursor()
                 password text
     )""")'''
 
-#Inserting login details
+#Adding new login details
 def add_password():
     with conn:
         website = input('Enter website: ')
@@ -37,6 +37,7 @@ def get_password():
     except :
         print("Username / Website doesn't exist in records")
 
+#Updating password
 def update_password():
     with conn:
         website = input('Enter website: ')
@@ -50,6 +51,7 @@ def update_password():
         except:
             print("Username / Website doesn't exist in records")
 
+#Deleting password
 def delete_password():
     with conn:
         website = input('Enter website: ')
