@@ -1,15 +1,16 @@
 import sqlite3
+import sys
 
 #change to 'login.db'
-conn = sqlite3.connect(':memory:')
+conn = sqlite3.connect('login.db')
 
 cur = conn.cursor()
 
-''''cur.execute("""CREATE TABLE login (
+cur.execute("""CREATE TABLE login (
                 website text,
                 username text,
                 password text
-    )""")'''
+    )""")
 
 #Inserting login details
 def add_password():
@@ -18,7 +19,7 @@ def add_password():
         username = input('Enter username: ')
         password = input('Enter password: ')
 
-        log = LOGIN('website', 'username', 'password')
+        #log = LOGIN('website', 'username', 'password')
 
         cur.execute("INSERT INTO login VALUES(?, ?, ?)", (website, username, password))
 
@@ -29,9 +30,9 @@ def get_password():
 
     try:
         cur.execute("SELECT * FROM login WHERE website = ? AND username = ?", (website, username))
-        print(curr.fetchone())
+        print(cur.fetchone())
 
-    except Exception as e:
+    except :
         print("Username / Website doesn't exist in records")
 
 def update_password():
@@ -41,9 +42,9 @@ def update_password():
         password =  input('Enter updated password: ')
 
         try:
-            curr.execute("UPDATE login SET password = ? WHERE website = ? and username = ?",  (password, website, username))
+            cur.execute("UPDATE login SET password = ? WHERE website = ? and username = ?",  (password, website, username))
         
-        except Exception as e:
+        except:
             print("Username / Website doesn't exist in records")
 
 def delete_password():
@@ -52,9 +53,34 @@ def delete_password():
         username = input('Enter username: ')
     
         try:
-            curr.execute("DELETE FROM login WHERE website = ? and username = ?", (website, username))
+            cur.execute("DELETE from login WHERE website = ? and username = ?", (website, username))
         
         except Exception as e:
             print("Username / Website doesn't exist in records")
-        
-conn.close()
+
+if __name__ == '__main__':
+    print("""Press: \n
+    1. To ADD a Password\n
+    2. To GET a Password\n
+    3. To UPDATE a Password\n
+    4. To DELETE a Password\n
+    or any other key to EXIT...\n
+    """)
+
+    choice =  input("Enter your choice: ")
+
+    if choice == '1':
+        add_password()
+
+    if choice == '2':
+        get_password()
+
+    if choice == '3':
+        update_password()
+    
+    if choice == '4':
+        delete_password()
+    
+    else:
+        conn.close()
+        sys.exit()
