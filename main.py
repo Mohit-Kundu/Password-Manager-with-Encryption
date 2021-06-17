@@ -31,4 +31,13 @@ def get_password():
 
     print(curr.fetchone())
 
+def update_password():
+    with conn:
+        website = input('Enter website: ')
+        username = input('Enter username: ')
+        password =  input('Enter updated password: ')
+
+        curr.execute("UPDATE login SET password = ? WHERE website = ? and username = ?",  (password, website, username))
+
+
 conn.close()
