@@ -31,8 +31,8 @@ def get_password():
     username = input('Enter username: ')
 
     try:
-        cur.execute("SELECT * FROM login WHERE website = ? AND username = ?", (website, username))
-        print(cur.fetchone())
+        cur.execute("SELECT password FROM login WHERE website = ? AND username = ?", (website, username))
+        print("Password: {}".format(cur.fetchone()))
 
     except :
         print("Username / Website doesn't exist in records")
