@@ -27,9 +27,12 @@ def get_password():
     website = input('Enter website: ')
     username = input('Enter username: ')
 
-    cur.execute("SELECT * FROM login WHERE website = ? AND username = ?", (website, username))
+    try:
+        cur.execute("SELECT * FROM login WHERE website = ? AND username = ?", (website, username))
+        print(curr.fetchone())
 
-    print(curr.fetchone())
+    except Exception as e:
+        print("Username / Website doesn't exist in records")
 
 def update_password():
     with conn:
@@ -37,7 +40,21 @@ def update_password():
         username = input('Enter username: ')
         password =  input('Enter updated password: ')
 
-        curr.execute("UPDATE login SET password = ? WHERE website = ? and username = ?",  (password, website, username))
+        try:
+            curr.execute("UPDATE login SET password = ? WHERE website = ? and username = ?",  (password, website, username))
+        
+        except Exception as e:
+            print("Username / Website doesn't exist in records")
 
-
+def delete_password():
+    with conn:
+        website = input('Enter website: ')
+        username = input('Enter username: ')
+    
+        try:
+            curr.execute("DELETE FROM login WHERE website = ? and username = ?", (website, username))
+        
+        except Exception as e:
+            print("Username / Website doesn't exist in records")
+        
 conn.close()
