@@ -1,5 +1,7 @@
 import sqlite3
+from cryptography.fernet import Fernet
 import sys
+import os
 
 #change to 'login.db'
 conn = sqlite3.connect('login.db')
@@ -13,16 +15,20 @@ cur = conn.cursor()
                 password text
     )""")'''
 
+crypt = Fernet(os.getenv('KEY'))
+
 #Adding new login details
 def add_password():
     with conn:
+
         website = input('Enter website: ')
         username = input('Enter username: ')
-        password = input('Enter password: ')
+        password = input('Enter password: ').encode('utf-8')
 
         #log = LOGIN('website', 'username', 'password')
+        encrypted_pw = crypt.encrypt(password) #Converting password to bytes for encryption
 
-        cur.execute("INSERT INTO login VALUES(?, ?, ?)", (website, username, password))
+        cur.execute("INSERT INTO login VALUES(?, ?, ?)", (website, username, encrypted_pw))
         print("Password added successfully")
 
 #Retrieving login details
@@ -32,9 +38,10 @@ def get_password():
 
     try:
         cur.execute("SELECT password FROM login WHERE website = ? AND username = ?", (website, username))
-        print("Password: {}".format(cur.fetchone()))
+        password = crypt.decrypt(cur.fetchone()[0])  # cur.fetchone returns a tuple, to get a string we need to index it
+        print("Password: {}".format(password.decode("utf-8")))
 
-    except :
+    except:
         print("Username / Website doesn't exist in records")
 
 #Updating password
@@ -65,6 +72,7 @@ def delete_password():
             print("Username / Website doesn't exist in records")
 
 if __name__ == '__main__':
+
     print("""Press: \n
     1. To ADD a Password\n
     2. To GET a Password\n
