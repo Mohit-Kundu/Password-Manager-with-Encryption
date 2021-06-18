@@ -1,5 +1,5 @@
 # Python-Password-Manager-with-Encryption
-This is an extensive **Password Manager** built in **Python**, that can ecrypts passwords and maintains a record of the **encrypted** passwords in a **sqlite** database.
+This is a **Password Manager** built using **Python** and **sqlite**, that ecrypts passwords and maintains a record of the **encrypted** passwords in a database.
 
 It performs the following operations:
 
@@ -19,9 +19,9 @@ It performs the following operations:
 2. The generated key is then stored in the .env file
 
 ## Note: 
-- Run key_gen.py to generate key for the first time. 
-- Do not run key_gen.py again, as it will overwrite the pre-existing key used for encryption passwords
-- If the key is overwritten, the manager won't be able to decrypt saved passwords
+- Run key_gen.py to generate key for the **first time**. 
+- **Do not run key_gen.py again**, as it will overwrite the pre-existing key used for encryption passwords
+- If the key is overwritten, the manager won't be able to decrypt saved passwords anymore
 
 ## How to run password manager?
 1. Run main.py
