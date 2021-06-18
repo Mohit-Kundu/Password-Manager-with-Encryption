@@ -2,6 +2,7 @@ import sqlite3
 from cryptography.fernet import Fernet
 import sys
 import os
+import pyperclip
 
 #Add pyperclip support
 
@@ -29,9 +30,12 @@ def add_password(website, username, password):
 #Retrieving login details
 def get_password(website, username):
     cur.execute("SELECT password FROM login WHERE website = ? AND username = ?", (website, username))
-    
+
     password = crypt.decrypt(cur.fetchone()[0])  # cur.fetchone returns a tuple, to get a string we need to index it
     print("Password: {}".format(password.decode("utf-8")))
+
+    pyperclip.copy(password.decode("utf-8"))
+    print("Password copied to clipboard")
 
 #Updating password
 def update_password(website, username, password):
