@@ -23,4 +23,10 @@ It performs the following operations:
 - Do not run key_gen.py again, as it will overwrite the pre-existing key used for encryption passwords
 - If the key is overwritten, the manager won't be able to decrypt saved passwords
 
-## Using Password Manager
+## How to run password manager?
+1. Run main.py
+2. Select the desired operation from list of operations by entering the corresponding number
+3. To exit, enter any key ( other than the ones specified in menu )
+
+---
+
