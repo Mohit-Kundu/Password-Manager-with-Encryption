@@ -1,12 +1,12 @@
 # Python-Password-Manager-with-Encryption
 This is a **Password Manager** built using **Python** and **sqlite**, that encrypts passwords and maintains a record of the **encrypted** passwords in a database.
 
-It performs the following operations:
+Operations supported include:
 
-- **Encrypts** passwords and **stores** them in a database
-- **Fetches** pre-existing passwords from the database and **copies them to clipboard** after **decryption**
-- **Updates** pre-existing passwords
-- **Deletes** pre-existing passwords
+- **Encrypting** passwords and **storing** them in a database
+- **Fetching** passwords from the database and **copying them to clipboard** after **decryption**
+- **Updating** pre-existing passwords
+- **Deleting** passwords
 
 ## Requirements
 - Python version > = 3.0
