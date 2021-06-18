@@ -3,7 +3,8 @@ from cryptography.fernet import Fernet
 import sys
 import os
 
-#change to 'login.db'
+#Add pyperclip support
+
 conn = sqlite3.connect('login.db')
 
 cur = conn.cursor()
@@ -18,60 +19,33 @@ cur = conn.cursor()
 crypt = Fernet(os.getenv('KEY'))
 
 #Adding new login details
-def add_password():
+def add_password(website, username, password):
     with conn:
-
-        website = input('Enter website: ')
-        username = input('Enter username: ')
-        password = input('Enter password: ').encode('utf-8') # Converting password to bytes for encryption
-
         encrypted_pw = crypt.encrypt(password) # Encryption
 
         cur.execute("INSERT INTO login VALUES(?, ?, ?)", (website, username, encrypted_pw))
         print("Password added successfully")
 
 #Retrieving login details
-def get_password():
-    website = input('Enter website: ')
-    username = input('Enter username: ')
-
-    try:
-        cur.execute("SELECT password FROM login WHERE website = ? AND username = ?", (website, username))
-        password = crypt.decrypt(cur.fetchone()[0])  # cur.fetchone returns a tuple, to get a string we need to index it
-        print("Password: {}".format(password.decode("utf-8")))
-
-    except:
-        print("Username / Website doesn't exist in records")
+def get_password(website, username):
+    cur.execute("SELECT password FROM login WHERE website = ? AND username = ?", (website, username))
+    
+    password = crypt.decrypt(cur.fetchone()[0])  # cur.fetchone returns a tuple, to get a string we need to index it
+    print("Password: {}".format(password.decode("utf-8")))
 
 #Updating password
-def update_password():
+def update_password(website, username, password):
     with conn:
-        website = input('Enter website: ')
-        username = input('Enter username: ')
-        password =  input('Enter updated password: ').encode('utf-8')
-
         encrypted_pw = crypt.encrypt(password) # Encryption
 
-        try:
-            cur.execute("UPDATE login SET password = ? WHERE website = ? and username = ?",  (encrypted_pw, website, username))
-
-            print('Password updated successfully')
-        
-        except:
-            print("Username / Website doesn't exist in records")
+        cur.execute("UPDATE login SET password = ? WHERE website = ? and username = ?",  (encrypted_pw, website, username))
+        print('Password updated successfully')
 
 #Deleting password
-def delete_password():
+def delete_password(website, username):
     with conn:
-        website = input('Enter website: ')
-        username = input('Enter username: ')
-    
-        try:
-            cur.execute("DELETE from login WHERE website = ? and username = ?", (website, username))
-            print("Password deleted successfully")
-        
-        except Exception as e:
-            print("Username / Website doesn't exist in records")
+        cur.execute("DELETE from login WHERE website = ? and username = ?", (website, username))
+        print("Password deleted successfully")
 
 if __name__ == '__main__':
 
@@ -85,17 +59,22 @@ if __name__ == '__main__':
 
     choice =  input("Enter your choice: ")
 
+    website = input('Enter website: ')
+    username = input('Enter username / email id: ')
+
     if choice == '1':
-        add_password()
+        password = input('Enter password: ').encode('utf-8') # Converting password to bytes for encryption
+        add_password(website, username, password)
 
     if choice == '2':
-        get_password()
+        get_password(website, username)
 
     if choice == '3':
-        update_password()
+        password =  input('Enter updated password: ').encode('utf-8')
+        update_password(website, username, password)
     
     if choice == '4':
-        delete_password()
+        delete_password(website, username)
     
     else:
         conn.close()
