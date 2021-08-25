@@ -23,7 +23,7 @@ Operations supported include:
 - **Do not run key_gen.py again**, as it will overwrite the pre-existing key used for encryption passwords
 - If the key is overwritten, the manager won't be able to decrypt saved passwords anymore
 
-## How to run password manager?
+## How do I run it?
 1. Run main.py
 2. Select the desired operation from list of operations by entering the corresponding number
 3. To exit, enter any key ( other than the ones specified in menu )
